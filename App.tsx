@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Button from './src/Button';
+import { Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import Button, { ButtonColor, ButtonSize, ButtonVariant } from './src/Button';
 import { useFonts, NotoSans_500Medium } from '@expo-google-fonts/noto-sans';
 import { useState } from 'react';
 import PlaygroundView from './src/PlaygroundView';
@@ -13,10 +13,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  navigation: { width: '100%', marginBottom: 20, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'space-between' },
+  navigation: { flexWrap: 'wrap', width: '100%', marginBottom: 20, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'space-between' },
   page: { flex: 1, justifyContent: 'space-evenly', alignItems: 'center' },
 })
 
+const PAGES = [
+  'Variants',
+  'Sizes',
+  'Colors',
+  'Icons',
+  'Shadows',
+  'Disabled',
+  'Playground',
+]
+
+const VARIANTS: ButtonVariant[] = ['default', 'outline', 'text']
+const SIZES: ButtonSize[] = ['sm', 'md', 'lg']
+const COLORS: ButtonColor[] = ['default', 'primary', 'secondary', 'danger']
+const ICONS = [{ label: 'none' }, { label: 'Icon on start', startIcon: 'local-grocery-store' }, { label: 'Icon on end', endIcon: 'local-grocery-store' }]
+const SHADOWS = [{ label: 'With Shadow' }, { label: 'Without Shadow', shadow: false }]
 export default function App() {
 
   const [page, setPage] = useState(0);
@@ -31,79 +46,35 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Heading>{PAGES[page]}</Heading>
       <View style={styles.navigation}>
-        <Button color={page === 0 ? 'primary' : 'secondary'} label={'Variants'} onPress={() => setPage(0)} />
-        <Button color={page === 1 ? 'primary' : 'secondary'} label={'Sizes'} onPress={() => setPage(1)} />
-        <Button color={page === 2 ? 'primary' : 'secondary'} label={'Colors'} onPress={() => setPage(2)} />
+        {PAGES.map((pageName, index) => (<Button color={page === index ? 'primary' : 'secondary'} label={pageName} onPress={() => setPage(index)} style={{ margin: 5 }} />))}
       </View>
-      <View style={styles.navigation}>
-        <Button color={page === 3 ? 'primary' : 'secondary'} label={'Icons'} onPress={() => setPage(3)} />
-        <Button color={page === 4 ? 'primary' : 'secondary'} label={'Shadows'} onPress={() => setPage(4)} />
-        <Button color={page === 5 ? 'primary' : 'secondary'} label={'Disabled'} onPress={() => setPage(5)} />
-      </View>
-      <Button color={page === 6 ? 'primary' : 'secondary'} label={'Playground'} onPress={() => setPage(6)} />
-      {
-        page === 0 && (
-          <View style={styles.page}>
-            <Heading>Variants</Heading>
-            <Button label='Default' color='danger' variant='default' />
-            <Button label='Outline' color='danger' variant='outline' />
-            <Button label='Text' color='danger' variant='text' />
-          </View>)
-      }
-      {
-        page === 1 && (
-          <View style={styles.page}>
-            <Heading>Sizes</Heading>
-            <Button label='sm' size='sm' />
-            <Button label='md' size='md' />
-            <Button label='lg' size='lg' />
-          </View>)
-      }
-      {
-        page === 2 && (
-          <View style={styles.page}>
-            <Heading>Colors</Heading>
-            <Button label='Default' color='default' />
-            <Button label='Primary' color='primary' />
-            <Button label='Secondary' color='secondary' />
-            <Button label='Danger' color='danger' />
-          </View>)
-      }
-      {
-        page === 3 && (
-          <View style={styles.page}>
-            <Heading>Icons</Heading>
-            <Button label='No Icon' color='primary' />
-            <Button label='Icon start' color='primary' startIcon='local-grocery-store' />
-            <Button label='Icon end' color='primary' endIcon='local-grocery-store' />
-          </View>)
-      }
-      {
-        page === 4 && (
-          <View style={styles.page}>
-            <Heading>Shadows</Heading>
-            <Button label='With Shadow' color='primary' />
-            <Button label='Without Shadow' color='primary' shadow={false} />
-          </View>)
-      }
-      {
-        page === 5 && (
-          <View style={styles.page}>
-            <Heading>Disabled</Heading>
-            <Button label='disabeld default' color='primary' disabled />
-            <Button label='disabeld outline' variant='outline' color='primary' disabled />
-            <Button label='disabled text' variant='text' color='primary' disabled />
-          </View>)
-      }
-      {
-        page === 6 && (
-          <View style={styles.page}>
+      <View style={styles.page}>
+        {page === 0 && (
+          VARIANTS.map((variantName, index) => <Button key={index} color='primary' variant={variantName} label={VARIANTS[index]} />)
+        )}
+        {page === 1 && (
+          SIZES.map((sizeName, index) => <Button key={index} color='primary' size={sizeName} label={SIZES[index]} />)
+        )}
+        {page === 2 && (
+          COLORS.map((colorName, index) => <Button key={index} color={colorName} label={COLORS[index]} />)
+        )}
+        {page === 3 && (
+          ICONS.map((iconSettings, index) => <Button key={index} color='primary' {...iconSettings} />)
+        )}
+        {page === 4 && (
+          SHADOWS.map((shadowSettings, index) => <Button key={index} color='primary' {...shadowSettings} />)
+        )}
+        {page === 5 && (
+          VARIANTS.map((variantName, index) => <Button key={index} color='primary' disabled variant={variantName} label={'disabled ' + VARIANTS[index]} />)
+        )}
+        {
+          page === 6 && (
             <PlaygroundView />
-          </View>)
-      }
-
-
+          )
+        }
+      </View>
       <StatusBar style="auto" />
     </SafeAreaView>
   );

@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { StyleSheet, View } from "react-native"
 import Button, { ButtonColor, ButtonSize, ButtonVariant } from "./Button"
-import Heading from "./Heading"
 import SelectionRow from "./SelectionRow"
 
 const styles = StyleSheet.create({
@@ -19,7 +18,6 @@ const PlaygroundView = () => {
 
     return (
         <View style={styles.container}>
-            <Heading>Playground</Heading>
             <SelectionRow label="Variant">
                 <Button color={variant === 'default' ? 'secondary' : 'primary'} label='Default' onPress={() => setVariant('default')} />
                 <Button color={variant === 'outline' ? 'secondary' : 'primary'} label='Outline' onPress={() => setVariant('outline')} />

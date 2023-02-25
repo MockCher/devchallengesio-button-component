@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { Platform, Pressable, StyleSheet, Text } from "react-native"
+import { Platform, Pressable, StyleSheet, Text, ViewStyle } from "react-native"
 import { MaterialIcons } from '@expo/vector-icons'
 
 export type ButtonVariant = 'default' | 'outline' | 'text'
@@ -16,6 +16,8 @@ interface ButtonProps {
     label: string
     onPress?: () => void
     shadow?: boolean
+    style?: ViewStyle
+
 }
 
 const useButtonStyle = (variant: ButtonVariant, color: ButtonColor, size: ButtonSize, isPressed: boolean, disabled: boolean, shadow: boolean) => {
@@ -148,8 +150,7 @@ const useButtonStyle = (variant: ButtonVariant, color: ButtonColor, size: Button
     }, [variant, isPressed, disabled, size, color])
 }
 
-
-const Button = ({ variant = 'default', color = 'default', size = 'md', disabled = false, startIcon, endIcon, label, onPress, shadow = true }: ButtonProps) => {
+const Button = ({ variant = 'default', color = 'default', size = 'md', disabled = false, startIcon, endIcon, label, onPress, shadow = true, style }: ButtonProps) => {
 
     const [isPressed, setIsPressed] = useState(false)
 
@@ -174,7 +175,7 @@ const Button = ({ variant = 'default', color = 'default', size = 'md', disabled 
 
     return (
         <Pressable
-            style={styles.buttonContainer}
+            style={[styles.buttonContainer, style]}
             {...buttonEvents}
             onPress={onPress}
         >
