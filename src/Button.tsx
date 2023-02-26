@@ -145,6 +145,7 @@ const useButtonStyle = (variant: ButtonVariant, color: ButtonColor, size: Button
                 color: variantStyle[variant].color,
                 fontFamily: 'NotoSans_500Medium',
                 fontWeight: '500',
+                textAlign: 'center'
             },
         })
     }, [variant, isPressed, disabled, size, color])
