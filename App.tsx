@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Platform, SafeAreaView, StyleSheet, View } from 'react-native';
 import Button, { ButtonColor, ButtonSize, ButtonVariant } from './src/Button';
 import { useFonts, NotoSans_500Medium } from '@expo-google-fonts/noto-sans';
 import { useState } from 'react';
