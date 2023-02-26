@@ -14,9 +14,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  layout: { width: '100%', flex: 1, flexDirection: Platform.OS === 'web' ? 'row' : 'column' },
-  navigation: { flexWrap: 'wrap', marginBottom: 20, flexDirection: Platform.OS === 'web' ? 'column' : 'row', justifyContent: 'space-evenly', alignContent: 'space-between', alignItems: 'center' },
-  page: { flex: 1, justifyContent: 'space-evenly', alignItems: 'center' },
+  layout: {
+    width: '100%',
+    flex: 1,
+    flexDirection: Platform.OS === 'web' ? 'row' : 'column'
+  },
+  navigation: {
+    flexWrap: 'wrap',
+    marginBottom: 20,
+    flexDirection: Platform.OS === 'web' ? 'column' : 'row',
+    justifyContent: 'space-evenly',
+    alignContent: 'space-between',
+    alignItems: 'center'
+  },
+  page: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
 })
 
 const PAGES = [

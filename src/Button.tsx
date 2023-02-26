@@ -20,7 +20,13 @@ interface ButtonProps {
 
 }
 
-const useButtonStyle = (variant: ButtonVariant, color: ButtonColor, size: ButtonSize, isPressed: boolean, disabled: boolean, shadow: boolean) => {
+const useButtonStyle = (
+    variant: ButtonVariant,
+    color: ButtonColor,
+    size: ButtonSize,
+    isPressed: boolean,
+    disabled: boolean,
+    shadow: boolean) => {
 
     return useMemo(() => {
 
@@ -97,19 +103,47 @@ const useButtonStyle = (variant: ButtonVariant, color: ButtonColor, size: Button
 
         const variantStyle = StyleSheet.create({
             default: {
-                backgroundColor: disabled ? colorsStyles.disabled.backgroundColor : colorsStyles[`${color}${isPressed ? 'Hovered' : ''}`].backgroundColor,
-                color: disabled ? colorsStyles.disabled.color : colorsStyles[`${color}${isPressed ? 'Hovered' : ''}`].color,
-                borderColor: disabled ? colorsStyles.disabled.backgroundColor : colorsStyles[`${color}${isPressed ? 'Hovered' : ''}`].backgroundColor
+                backgroundColor: disabled
+                    ? colorsStyles.disabled.backgroundColor
+                    : colorsStyles[`${color}${isPressed
+                        ? 'Hovered'
+                        : ''}`].backgroundColor,
+                color: disabled
+                    ? colorsStyles.disabled.color
+                    : colorsStyles[`${color}${isPressed
+                        ? 'Hovered'
+                        : ''}`].color,
+                borderColor: disabled
+                    ? colorsStyles.disabled.backgroundColor
+                    : colorsStyles[`${color}${isPressed
+                        ? 'Hovered'
+                        : ''}`].backgroundColor
             },
             outline: {
-                backgroundColor: isPressed ? colorsStyles[`${color}Faded`].backgroundColor : 'transparent',
-                color: disabled ? colorsStyles.disabled.color : colorsStyles[`${color}Hovered`].backgroundColor,
-                borderColor: disabled ? colorsStyles.disabled.color : colorsStyles[`${color}Hovered`].backgroundColor,
+                backgroundColor: isPressed
+                    ? colorsStyles[`${color}Faded`].backgroundColor
+                    : 'transparent',
+                color: disabled
+                    ? colorsStyles.disabled.color
+                    : colorsStyles[`${color}Hovered`].backgroundColor,
+                borderColor: disabled
+                    ? colorsStyles.disabled.color
+                    : colorsStyles[`${color}Hovered`].backgroundColor,
             },
             text: {
-                backgroundColor: disabled ? 'transparent' : isPressed ? colorsStyles[`${color}Faded`].backgroundColor : 'transparent',
-                color: disabled ? colorsStyles.disabled.color : colorsStyles[`${color}Hovered`].backgroundColor,
-                borderColor: disabled ? 'transparent' : isPressed ? colorsStyles[`${color}Faded`].backgroundColor : 'transparent',
+                backgroundColor: disabled
+                    ? 'transparent'
+                    : isPressed
+                        ? colorsStyles[`${color}Faded`].backgroundColor
+                        : 'transparent',
+                color: disabled
+                    ? colorsStyles.disabled.color
+                    : colorsStyles[`${color}Hovered`].backgroundColor,
+                borderColor: disabled
+                    ? 'transparent'
+                    : isPressed
+                        ? colorsStyles[`${color}Faded`].backgroundColor
+                        : 'transparent',
             }
         })
 
@@ -147,18 +181,41 @@ const useButtonStyle = (variant: ButtonVariant, color: ButtonColor, size: Button
                 fontWeight: '500',
                 textAlign: 'center'
             },
+            iconLeft: {
+                marginRight: 8
+            },
+            iconRight: {
+                marginLeft: 8
+            }
         })
     }, [variant, isPressed, disabled, size, color])
 }
 
-const Button = ({ variant = 'default', color = 'default', size = 'md', disabled = false, startIcon, endIcon, label, onPress, shadow = true, style }: ButtonProps) => {
+const Button = ({
+    variant = 'default',
+    color = 'default',
+    size = 'md',
+    disabled = false,
+    startIcon,
+    endIcon,
+    label,
+    onPress,
+    shadow = true,
+    style }: ButtonProps) => {
 
     const [isPressed, setIsPressed] = useState(false)
 
     const _in = () => disabled ? () => { } : setIsPressed(true)
     const _out = () => disabled ? () => { } : setIsPressed(false)
 
-    const styles = useButtonStyle(variant, color, size, isPressed, disabled, shadow)
+    const styles = useButtonStyle(
+        variant,
+        color,
+        size,
+        isPressed,
+        disabled,
+        shadow
+    )
 
     const buttonEvents = Platform.select({
         native: {
@@ -180,9 +237,19 @@ const Button = ({ variant = 'default', color = 'default', size = 'md', disabled 
             {...buttonEvents}
             onPress={onPress}
         >
-            {startIcon && <MaterialIcons style={{ marginRight: 8 }} name="local-grocery-store" size={14} color={styles.buttonText.color} />}
+            {startIcon && <MaterialIcons
+                style={styles.iconLeft}
+                name="local-grocery-store"
+                size={14}
+                color={styles.buttonText.color}
+            />}
             <Text style={styles.buttonText}>{label}</Text>
-            {endIcon && <MaterialIcons style={{ marginLeft: 8 }} name="local-grocery-store" size={14} color={styles.buttonText.color} />}
+            {endIcon && <MaterialIcons
+                style={styles.iconRight}
+                name="local-grocery-store"
+                size={14}
+                color={styles.buttonText.color}
+            />}
         </Pressable>
     )
 }
